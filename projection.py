@@ -233,7 +233,7 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
         d = tensorlist_to_tensor(d)
         matrix2.append(d.numpy())
 
-
+    matrix_1_len = len(matrix1[0])
     matrix = np.concatenate((matrix1, matrix2), axis=0)
 
     # Perform PCA on the optimization path matrix
@@ -242,10 +242,10 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
     pca.fit(np.array(matrix))
     import pdb
     pdb.set_trace()
-    pc11 = np.array(pca.components_[:100, 0])
-    pc12 = np.array(pca.components_[:100, 1])
-    pc21 = np.array(pca.components_[100:, 0])
-    pc22 = np.array(pca.components_[100:, 1])
+    pc11 = np.array(pca.components_[0, :matrix_1_len])
+    pc12 = np.array(pca.components_[1, :matrix_1_len])
+    pc21 = np.array(pca.components_[0, matrix_1_len:])
+    pc22 = np.array(pca.components_[1, matrix_1_len:])
     print("angle between pc1 and pc2: %f" % cal_angle(pca.components_[:, 0], pca.components_[:, 1]))
 
     print("pca.explained_variance_ratio_: %s" % str(pca.explained_variance_ratio_))
