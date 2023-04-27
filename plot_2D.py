@@ -104,7 +104,7 @@ def plot_2d_contour(
         plt.show()
 
 
-def plot_trajectory(proj_file, dir_file, show=False, savefig=False):
+def plot_trajectory(proj_file, dir_file, show=False):
     """Plot optimization trajectory on the plane spanned by given directions."""
 
     assert exists(proj_file), "Projection file does not exist."
@@ -123,8 +123,8 @@ def plot_trajectory(proj_file, dir_file, show=False, savefig=False):
             plt.xlabel("1st PC: %.2f %%" % (ratio_x * 100), fontsize="xx-large")
             plt.ylabel("2nd PC: %.2f %%" % (ratio_y * 100), fontsize="xx-large")
         f2.close()
-    if savefig:
-        fig.savefig(proj_file + ".pdf", dpi=300, bbox_inches="tight", format="pdf")
+
+    fig.savefig(proj_file + ".pdf", dpi=300, bbox_inches="tight", format="pdf")
     if show:
         plt.show()
 
