@@ -176,7 +176,7 @@ def project_trajectory(dir_file, w, s, dataset, model_name, model_files,
     return proj_file
 
 
-def setup_PCA_directions(args, model_files, w, s):
+def setup_PCA_directions(args, model_files, w, s, modle_folder):
     """
         Find PCA directions for the optimization path from the initial model
         to the final trained model.
@@ -186,7 +186,10 @@ def setup_PCA_directions(args, model_files, w, s):
     """
 
     # Name the .h5 file that stores the PCA directions.
-    folder_name = args.model_folder + '/PCA_' + args.dir_type
+    if model_folder is None:
+        folder_name = args.model_folder + '/PCA_' + args.dir_type
+    else:
+        folder_name = model_folder + '/PCA_' + args.dir_type
     if args.ignore:
         folder_name += '_ignore=' + args.ignore
     folder_name += '_save_epoch=' + str(args.save_epoch)
