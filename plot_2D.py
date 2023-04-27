@@ -147,9 +147,9 @@ def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, loss
     y_coord2 = list(f2["proj_ycoord"])
     plt.plot(x_coord1, y_coord1, marker=".", label = name1)
     plt.plot(x_coord2, y_coord2, marker=".", label = name2)
-    # for i, loss in enumerate(losses1):
-    #     if i % 3 == 0:
-    #         plt.annotate(loss, (x_coord1[i], y_coord1[i]))
+    for i, loss in enumerate(losses1):
+        if i % 3 == 0:
+            plt.annotate(loss, (x_coord1[i], y_coord1[i]))
     for i, loss in enumerate(losses2):
         if i % 3 == 0:
             plt.annotate(loss, (x_coord2[i], y_coord2[i]))
