@@ -152,8 +152,7 @@ def plot_trajectory_compare(proj_file1, proj_file2, dir_file, show=False):
             plt.xlabel("1st PC: %.2f %%" % (ratio_x * 100), fontsize="xx-large")
             plt.ylabel("2nd PC: %.2f %%" % (ratio_y * 100), fontsize="xx-large")
         f2.close()
-    if savefig:
-        fig.savefig(proj_file + ".pdf", dpi=300, bbox_inches="tight", format="pdf")
+    fig.savefig(proj_file2 + ".pdf", dpi=300, bbox_inches="tight", format="pdf")
     if show:
         plt.show()
 
