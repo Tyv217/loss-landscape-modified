@@ -37,6 +37,7 @@ models = {
     "wrn110_2_noshort": resnet.WRN110_2_noshort,
     "wrn110_4_noshort": resnet.WRN110_4_noshort,
     "simplenet": simplenet.SimpleNet,
+    "your_network": your_network.MyNetwork,
 }
 
 
