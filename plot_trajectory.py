@@ -11,7 +11,7 @@ import os
 import argparse
 import model_loader
 import net_plotter
-from projection import setup_PCA_directions, project_trajectory, setup_PCA_directions_compare, project_trajectory_compare
+from projection import setup_PCA_directions_compare, project_trajectory_compare
 import plot_2D
 
 
