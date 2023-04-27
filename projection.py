@@ -141,7 +141,7 @@ def project_trajectory_compare(dir_file, w, s, dataset, model_name, model_files,
           proj_file: the projection filename
     """
 
-    proj_file = dir_file + '_proj_' str(number) + "_" + proj_method + '.h5'
+    proj_file = dir_file + '_proj_' + str(number) + "_" + proj_method + '.h5'
     if os.path.exists(proj_file):
         print('The projection file exists! No projection is performed unless %s is deleted' % proj_file)
         return proj_file
@@ -176,7 +176,7 @@ def project_trajectory_compare(dir_file, w, s, dataset, model_name, model_files,
     return proj_file
 
 
-def setup_PCA_directions_compare(args, model_files, w1, w2, s1, s2, model_folder):
+def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s2, model_folder):
     """
         Find PCA directions for the optimization path from the initial model
         to the final trained model.
@@ -186,8 +186,8 @@ def setup_PCA_directions_compare(args, model_files, w1, w2, s1, s2, model_folder
     """
 
     # Name the .h5 file that stores the PCA directions.
-    if model_folder is N
-    folder_name = args.model_folder + '/PCA_' + args.dir_type
+    if model_folder is None:
+        folder_name = args.model_folder + '/PCA_' + args.dir_type
     if args.ignore:
         folder_name += '_ignore=' + args.ignore
     folder_name += '_save_epoch=' + str(args.save_epoch)
@@ -213,7 +213,7 @@ def setup_PCA_directions_compare(args, model_files, w1, w2, s1, s2, model_folder
             s = net2.state_dict()
             d = net_plotter.get_diff_states(s1, s)
         if args.ignore == 'biasbn':
-        	net_plotter.ignore_biasbn(d)
+            net_plotter.ignore_biasbn(d)
         d = tensorlist_to_tensor(d)
         matrix.append(d.numpy())
     matrix2 = []
@@ -227,7 +227,7 @@ def setup_PCA_directions_compare(args, model_files, w1, w2, s1, s2, model_folder
             s = net2.state_dict()
             d = net_plotter.get_diff_states(s2, s)
         if args.ignore == 'biasbn':
-        	net_plotter.ignore_biasbn(d)
+            net_plotter.ignore_biasbn(d)
         d = tensorlist_to_tensor(d)
         matrix.append(d.numpy())
 

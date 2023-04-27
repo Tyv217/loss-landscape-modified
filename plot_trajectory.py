@@ -65,19 +65,14 @@ if __name__ == '__main__':
     # load or create projection directions
     #--------------------------------------------------------------------------
     if args.dir_file1:
-        dir_file1 = args.dir_file1
+        dir_file = args.dir_file1
     else:
-        dir_file1 = setup_PCA_directions(args, model_files1, w1, s1, args.model_folder1)
-    if args.dir_file2:
-        dir_file2 = args.dir_file2
-    else:
-        dir_file2 = setup_PCA_directions(args, model_files2, w2, s2, args.model_folder2)
-
+        dir_file = setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s2, args.model_folder1)
     #--------------------------------------------------------------------------
     # projection trajectory to given directions
     #--------------------------------------------------------------------------
-    proj_file1 = project_trajectory(dir_file1, w1, s1, args.dataset, args.model,
+    proj_file1 = project_trajectory_compare(dir_file, w1, s1, args.dataset, args.model,
                                 model_files1, args.dir_type, 'cos')
-    proj_file2 = project_trajectory(dir_file2, w2, s2, args.dataset, args.model,
+    proj_file2 = project_trajectory_compare(dir_file, w2, s2, args.dataset, args.model,
                                 model_files2, args.dir_type, 'cos')
-    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file2, savefig=True)
+    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file, savefig=True)
