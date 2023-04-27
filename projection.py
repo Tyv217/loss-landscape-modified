@@ -176,7 +176,7 @@ def project_trajectory(dir_file, w, s, dataset, model_name, model_files,
     return proj_file
 
 
-def setup_PCA_directions(args, model_files, w, s, modle_folder):
+def setup_PCA_directions(args, model_files, w, s, model_folder = None):
     """
         Find PCA directions for the optimization path from the initial model
         to the final trained model.
