@@ -72,7 +72,7 @@ if __name__ == '__main__':
     # projection trajectory to given directions
     #--------------------------------------------------------------------------
     proj_file1 = project_trajectory_compare(dir_file, w1, s1, args.dataset, args.model,
-                                model_files1, args.dir_type, 'cos')
+                                model_files1, args.dir_type, 'cos', 1)
     proj_file2 = project_trajectory_compare(dir_file, w2, s2, args.dataset, args.model,
-                                model_files2, args.dir_type, 'cos')
+                                model_files2, args.dir_type, 'cos', 2)
     plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file)
