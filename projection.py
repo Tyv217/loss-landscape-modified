@@ -217,7 +217,7 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
         if args.ignore == 'biasbn':
             net_plotter.ignore_biasbn(d)
         d = tensorlist_to_tensor(d)
-        matrix.append(d.numpy())
+        matrix1.append(d.numpy())
     matrix2 = []
     for model_file in model_files2:
         print (model_file)
@@ -231,7 +231,7 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
         if args.ignore == 'biasbn':
             net_plotter.ignore_biasbn(d)
         d = tensorlist_to_tensor(d)
-        matrix.append(d.numpy())
+        matrix2.append(d.numpy())
 
 
     matrix = np.concatenate((matrix1, matrix2), axis=0)
