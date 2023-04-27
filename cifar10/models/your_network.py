@@ -4,7 +4,7 @@ import torch.nn.functional as F
 
 
 class MyNetwork(nn.Module):
-    def __init__(self, optimizer):
+    def __init__(self):
         super().__init__()
         self.conv1 = nn.Conv2d(3, 6, 3)
         self.bn1 = nn.BatchNorm2d(6)
@@ -15,7 +15,6 @@ class MyNetwork(nn.Module):
         self.pool = nn.MaxPool2d(2, 2)
         self.fc1 = nn.Linear(32 * 2 * 2, 84)
         self.fc2 = nn.Linear(84, 10)
-        self.optimizer = optimizer
 
     def forward(self, x):
         x = self.pool(F.relu(self.bn1(self.conv1(x))))
