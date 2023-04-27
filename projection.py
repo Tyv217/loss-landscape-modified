@@ -208,7 +208,7 @@ def setup_PCA_directions(args, model_files, w, s):
             s2 = net2.state_dict()
             d = net_plotter.get_diff_states(s, s2)
         if args.ignore == 'biasbn':
-        	net_plotter.ignore_biasbn(d)
+            net_plotter.ignore_biasbn(d)
         d = tensorlist_to_tensor(d)
         matrix.append(d.numpy())
 

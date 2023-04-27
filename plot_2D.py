@@ -104,13 +104,17 @@ def plot_2d_contour(
         plt.show()
 
 
-def plot_trajectory(proj_file, dir_file, show=False):
+def plot_trajectory(proj_file, dir_file, losses, show=False):
     """Plot optimization trajectory on the plane spanned by given directions."""
 
     assert exists(proj_file), "Projection file does not exist."
     f = h5py.File(proj_file, "r")
     fig = plt.figure()
-    plt.plot(list(f["proj_xcoord"]), list(f["proj_ycoord"]), marker=".")
+    x_coord = list(f["proj_xcoord"])
+    y_coord = list(f["proj_ycoord"])
+    plt.plot(x_coord, y_coord, marker=".")
+    for i, loss in enumerate(losses):
+        plt.annotate(loss, (x_coord[i], y_coord[i]))
     plt.tick_params("y", labelsize="x-large")
     plt.tick_params("x", labelsize="x-large")
     f.close()
