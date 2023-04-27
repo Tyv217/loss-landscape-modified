@@ -114,7 +114,8 @@ def plot_trajectory(proj_file, dir_file, losses, show=False):
     y_coord = list(f["proj_ycoord"])
     plt.plot(x_coord, y_coord, marker=".")
     for i, loss in enumerate(losses):
-        plt.annotate(loss, (x_coord[i], y_coord[i]))
+        if i % 3 == 0:
+            plt.annotate(loss, (x_coord[i], y_coord[i]), fontsize = 8)
     plt.tick_params("y", labelsize="x-large")
     plt.tick_params("x", labelsize="x-large")
     f.close()
