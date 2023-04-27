@@ -4,6 +4,7 @@ import cifar10.models.vgg as vgg
 import cifar10.models.resnet as resnet
 import cifar10.models.densenet as densenet
 import cifar10.models.simplenet as simplenet
+import cifar10.models.your_network as your_network
 
 # map between model name and function
 models = {
