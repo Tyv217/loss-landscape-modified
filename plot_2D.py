@@ -128,7 +128,7 @@ def plot_trajectory(proj_file, dir_file, show=False, savefig=False):
     if show:
         plt.show()
 
-def plot_trajectory_compare(proj_file1, proj_file2, dir_file, show=False):
+def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, show=False):
     """Plot optimization trajectory on the plane spanned by given directions."""
 
     assert exists(proj_file1), "Projection file does not exist."

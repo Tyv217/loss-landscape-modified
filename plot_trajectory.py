@@ -75,4 +75,4 @@ if __name__ == '__main__':
                                 model_files1, args.dir_type, 'cos', 1)
     proj_file2 = project_trajectory_compare(dir_file, w2, s2, args.dataset, args.model,
                                 model_files2, args.dir_type, 'cos', 2)
-    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file)
+    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file, args.model_folder1.split("/")[-1], args.model_folder2.split("/")[-1])
