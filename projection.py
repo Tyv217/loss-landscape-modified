@@ -188,6 +188,8 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
     # Name the .h5 file that stores the PCA directions.
     if model_folder is None:
         folder_name = args.model_folder + '/PCA_' + args.dir_type
+    else:
+        folder_name = model_folder
     if args.ignore:
         folder_name += '_ignore=' + args.ignore
     folder_name += '_save_epoch=' + str(args.save_epoch)
