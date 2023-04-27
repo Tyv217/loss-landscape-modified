@@ -32,8 +32,20 @@ if __name__ == '__main__':
     parser.add_argument('--save_epoch', default=1, type=int, help='save models every few epochs')
     parser.add_argument('--dir_file1', default='', help='load the direction file for projection')
     parser.add_argument('--dir_file2', default='', help='load the direction file for projection')
+    parser.add_argument('--loss_file1', default='', help='load the direction file for projection')
+    parser.add_argument('--loss_file2', default='', help='load the direction file for projection')
+
 
     args = parser.parse_args()
+    with open(args.loss_file1, 'r') as f:
+        losses1 = [float(line.strip()) for line in f.readlines()]
+
+    losses1 = [f'{loss:.2f}' for loss in losses1]
+
+    with open(args.loss_file2, 'r') as f:
+        losses2 = [float(line.strip()) for line in f.readlines()]
+
+    losses2 = [f'{loss:.2f}' for loss in losses2]
 
     #--------------------------------------------------------------------------
     # load the final model
@@ -75,4 +87,4 @@ if __name__ == '__main__':
                                 model_files1, args.dir_type, 'cos', 1)
     proj_file2 = project_trajectory_compare(dir_file, w2, s2, args.dataset, args.model,
                                 model_files2, args.dir_type, 'cos', 2)
-    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file, args.model_folder1.split("/")[-1], args.model_folder2.split("/")[-1])
+    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file, args.model_folder1.split("/")[-1], args.model_folder2.split("/")[-1], losses1, losses2)

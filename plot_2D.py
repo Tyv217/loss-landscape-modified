@@ -132,7 +132,7 @@ def plot_trajectory(proj_file, dir_file, losses, show=False):
     if show:
         plt.show()
 
-def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, show=False):
+def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, losses1, losses2, show=False):
     """Plot optimization trajectory on the plane spanned by given directions."""
 
     assert exists(proj_file1), "Projection file does not exist."
@@ -140,10 +140,19 @@ def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, show
     f1 = h5py.File(proj_file1, "r")
     f2 = h5py.File(proj_file2, "r")
     fig = plt.figure()
-    plt.plot(list(f1["proj_xcoord"]), list(f1["proj_ycoord"]), marker=".")
-    plt.plot(list(f2["proj_xcoord"]), list(f2["proj_ycoord"]), marker=".")
+    x_coord1 = list(f1["proj_xcoord"])
+    y_coord1 = list(f1["proj_ycoord"])
+    x_coord2 = list(f2["proj_xcoord"])
+    y_coord2 = list(f2["proj_ycoord"])
+    plt.plot(x_coord1, y_coord1, marker=".", label = name1)
+    plt.plot(x_coord2, y_coord2, marker=".", label = name2)
+    for i, loss in enumerate(losses1):
+        plt.annotate(loss, (x_coord1[i], y_coord1[i]))
+    for i, loss in enumerate(losses2):
+        plt.annotate(loss, (x_coord2[i], y_coord2[i]))
     plt.tick_params("y", labelsize="x-large")
     plt.tick_params("x", labelsize="x-large")
+    plt.legend()
     f1.close()
     f2.close()
 
