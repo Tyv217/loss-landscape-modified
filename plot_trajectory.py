@@ -67,11 +67,11 @@ if __name__ == '__main__':
     if args.dir_file1:
         dir_file1 = args.dir_file1
     else:
-        dir_file1 = setup_PCA_directions(args, model_files1, w1, s1, model_folder1)
+        dir_file1 = setup_PCA_directions(args, model_files1, w1, s1, args.model_folder1)
     if args.dir_file2:
         dir_file2 = args.dir_file2
     else:
-        dir_file2 = setup_PCA_directions(args, model_files2, w2, s2, model_folder2)
+        dir_file2 = setup_PCA_directions(args, model_files2, w2, s2, args.model_folder2)
 
     #--------------------------------------------------------------------------
     # projection trajectory to given directions
