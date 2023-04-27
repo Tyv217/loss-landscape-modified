@@ -128,6 +128,35 @@ def plot_trajectory(proj_file, dir_file, show=False, savefig=False):
     if show:
         plt.show()
 
+def plot_trajectory_compare(proj_file1, proj_file2, dir_file, show=False):
+    """Plot optimization trajectory on the plane spanned by given directions."""
+
+    assert exists(proj_file1), "Projection file does not exist."
+    assert exists(proj_file2), "Projection file does not exist."
+    f1 = h5py.File(proj_file1, "r")
+    f2 = h5py.File(proj_file2, "r")
+    fig = plt.figure()
+    plt.plot(list(f1["proj_xcoord"]), list(f1["proj_ycoord"]), marker=".")
+    plt.plot(list(f2["proj_xcoord"]), list(f2["proj_ycoord"]), marker=".")
+    plt.tick_params("y", labelsize="x-large")
+    plt.tick_params("x", labelsize="x-large")
+    f1.close()
+    f2.close()
+
+
+    if exists(dir_file):
+        f2 = h5py.File(dir_file, "r")
+        if "explained_variance_ratio_" in f2.keys():
+            ratio_x = f2["explained_variance_ratio_"][0]
+            ratio_y = f2["explained_variance_ratio_"][1]
+            plt.xlabel("1st PC: %.2f %%" % (ratio_x * 100), fontsize="xx-large")
+            plt.ylabel("2nd PC: %.2f %%" % (ratio_y * 100), fontsize="xx-large")
+        f2.close()
+    if savefig:
+        fig.savefig(proj_file + ".pdf", dpi=300, bbox_inches="tight", format="pdf")
+    if show:
+        plt.show()
+
 
 def plot_contour_trajectory(
     surf_file,

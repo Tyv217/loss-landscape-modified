@@ -339,3 +339,16 @@ def load_directions(dir_file):
         directions = [h5_util.read_list(f, 'xdirection')]
 
     return directions
+
+def load_directions_compare(dir_file, number):
+    """ Load direction(s) from the direction file."""
+
+    f = h5py.File(dir_file, 'r')
+    if 'ydirection1' in f.keys():  # If this is a 2D plot
+        xdirection = h5_util.read_list(f, 'xdirection' + str(number))
+        ydirection = h5_util.read_list(f, 'ydirection' + str(number))
+        directions = [xdirection, ydirection]
+    else:
+        directions = [h5_util.read_list(f, 'xdirection' + str(number))]
+
+    return directions

@@ -123,8 +123,8 @@ def project_2D(d, dx, dy, proj_method):
     return x, y
 
 
-def project_trajectory(dir_file, w, s, dataset, model_name, model_files,
-               dir_type='weights', proj_method='cos'):
+def project_trajectory_compare(dir_file, w, s, dataset, model_name, model_files,
+               dir_type='weights', proj_method='cos', number = 1):
     """
         Project the optimization trajectory onto the given two directions.
 
@@ -141,13 +141,13 @@ def project_trajectory(dir_file, w, s, dataset, model_name, model_files,
           proj_file: the projection filename
     """
 
-    proj_file = dir_file + '_proj_' + proj_method + '.h5'
+    proj_file = dir_file + '_proj_' str(number) + "_" + proj_method + '.h5'
     if os.path.exists(proj_file):
         print('The projection file exists! No projection is performed unless %s is deleted' % proj_file)
         return proj_file
 
     # read directions and convert them to vectors
-    directions = net_plotter.load_directions(dir_file)
+    directions = net_plotter.load_directions_compare(dir_file, number)
     dx = nplist_to_tensor(directions[0])
     dy = nplist_to_tensor(directions[1])
 
@@ -176,7 +176,7 @@ def project_trajectory(dir_file, w, s, dataset, model_name, model_files,
     return proj_file
 
 
-def setup_PCA_directions(args, model_files, w, s, model_folder = None):
+def setup_PCA_directions_compare(args, model_files, w1, w2, s1, s2, model_folder):
     """
         Find PCA directions for the optimization path from the initial model
         to the final trained model.
@@ -186,10 +186,8 @@ def setup_PCA_directions(args, model_files, w, s, model_folder = None):
     """
 
     # Name the .h5 file that stores the PCA directions.
-    if model_folder is None:
-        folder_name = args.model_folder + '/PCA_' + args.dir_type
-    else:
-        folder_name = model_folder + '/PCA_' + args.dir_type
+    if model_folder is N
+    folder_name = args.model_folder + '/PCA_' + args.dir_type
     if args.ignore:
         folder_name += '_ignore=' + args.ignore
     folder_name += '_save_epoch=' + str(args.save_epoch)
@@ -204,46 +202,73 @@ def setup_PCA_directions(args, model_files, w, s, model_folder = None):
             return dir_name
 
     # load models and prepare the optimization path matrix
-    matrix = []
-    for model_file in model_files:
+    matrix1 = []
+    for model_file in model_files1:
         print (model_file)
         net2 = model_loader.load(args.dataset, args.model, model_file)
         if args.dir_type == 'weights':
-            w2 = net_plotter.get_weights(net2)
-            d = net_plotter.get_diff_weights(w, w2)
+            w = net_plotter.get_weights(net2)
+            d = net_plotter.get_diff_weights(w1, w)
         elif args.dir_type == 'states':
-            s2 = net2.state_dict()
-            d = net_plotter.get_diff_states(s, s2)
+            s = net2.state_dict()
+            d = net_plotter.get_diff_states(s1, s)
+        if args.ignore == 'biasbn':
+        	net_plotter.ignore_biasbn(d)
+        d = tensorlist_to_tensor(d)
+        matrix.append(d.numpy())
+    matrix2 = []
+    for model_file in model_files2:
+        print (model_file)
+        net2 = model_loader.load(args.dataset, args.model, model_file)
+        if args.dir_type == 'weights':
+            w = net_plotter.get_weights(net2)
+            d = net_plotter.get_diff_weights(w2, w)
+        elif args.dir_type == 'states':
+            s = net2.state_dict()
+            d = net_plotter.get_diff_states(s2, s)
         if args.ignore == 'biasbn':
         	net_plotter.ignore_biasbn(d)
         d = tensorlist_to_tensor(d)
         matrix.append(d.numpy())
 
+
+    matrix = np.concatenate((matrix1, matrix2), axis=0)
+
     # Perform PCA on the optimization path matrix
     print ("Perform PCA on the models")
     pca = PCA(n_components=2)
     pca.fit(np.array(matrix))
-    pc1 = np.array(pca.components_[0])
-    pc2 = np.array(pca.components_[1])
-    print("angle between pc1 and pc2: %f" % cal_angle(pc1, pc2))
+    pc11 = np.array(pca.components_[:100, 0])
+    pc12 = np.array(pca.components_[:100, 1])
+    pc21 = np.array(pca.components_[100:, 0])
+    pc22 = np.array(pca.components_[100:, 1])
+    print("angle between pc1 and pc2: %f" % cal_angle(pca.components_[:, 0], pca.components_[:, 1]))
 
     print("pca.explained_variance_ratio_: %s" % str(pca.explained_variance_ratio_))
 
     # convert vectorized directions to the same shape as models to save in h5 file.
     if args.dir_type == 'weights':
-        xdirection = npvec_to_tensorlist(pc1, w)
-        ydirection = npvec_to_tensorlist(pc2, w)
+        xdirection1 = npvec_to_tensorlist(pc11, w1)
+        ydirection1 = npvec_to_tensorlist(pc12, w1)
+        xdirection2 = npvec_to_tensorlist(pc21, w2)
+        ydirection2 = npvec_to_tensorlist(pc22, w2)
     elif args.dir_type == 'states':
-        xdirection = npvec_to_tensorlist(pc1, s)
-        ydirection = npvec_to_tensorlist(pc2, s)
+        xdirection1 = npvec_to_tensorlist(pc11, s1)
+        ydirection1 = npvec_to_tensorlist(pc12, s1)
+        xdirection2 = npvec_to_tensorlist(pc21, s2)
+        ydirection2 = npvec_to_tensorlist(pc22, s2)
 
     if args.ignore == 'biasbn':
-        net_plotter.ignore_biasbn(xdirection)
-        net_plotter.ignore_biasbn(ydirection)
+        net_plotter.ignore_biasbn(xdirection1)
+        net_plotter.ignore_biasbn(ydirection1)
+        net_plotter.ignore_biasbn(xdirection2)
+        net_plotter.ignore_biasbn(ydirection2)
 
     f = h5py.File(dir_name, 'w')
-    h5_util.write_list(f, 'xdirection', xdirection)
-    h5_util.write_list(f, 'ydirection', ydirection)
+    h5_util.write_list(f, 'xdirection1', xdirection1)
+    h5_util.write_list(f, 'xdirection2', xdirection2)
+    h5_util.write_list(f, 'ydirection1', ydirection1)
+    h5_util.write_list(f, 'ydirection2', ydirection2)
 
     f['explained_variance_ratio_'] = pca.explained_variance_ratio_
     f['singular_values_'] = pca.singular_values_
