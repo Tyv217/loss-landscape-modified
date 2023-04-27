@@ -240,6 +240,8 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
     print ("Perform PCA on the models")
     pca = PCA(n_components=2)
     pca.fit(np.array(matrix))
+    import pdb
+    pdb.set_trace()
     pc11 = np.array(pca.components_[0, :matrix_1_len])
     pc12 = np.array(pca.components_[1, :matrix_1_len])
     pc21 = np.array(pca.components_[0, matrix_1_len:])
