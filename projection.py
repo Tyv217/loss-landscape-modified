@@ -234,7 +234,7 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
         matrix2.append(d.numpy())
 
     matrix_1_len = len(matrix1[0])
-    matrix = np.concatenate((matrix1, matrix2), axis=0)
+    matrix = np.concatenate((matrix1, matrix2), axis=1)
 
     # Perform PCA on the optimization path matrix
     print ("Perform PCA on the models")
