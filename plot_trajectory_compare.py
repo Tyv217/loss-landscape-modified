@@ -30,8 +30,7 @@ if __name__ == '__main__':
     parser.add_argument('--start_epoch', default=0, type=int, help='min index of epochs')
     parser.add_argument('--max_epoch', default=300, type=int, help='max number of epochs')
     parser.add_argument('--save_epoch', default=1, type=int, help='save models every few epochs')
-    parser.add_argument('--dir_file1', default='', help='load the direction file for projection')
-    parser.add_argument('--dir_file2', default='', help='load the direction file for projection')
+    parser.add_argument('--dir_file', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file1', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file2', default='', help='load the direction file for projection')
 
@@ -76,8 +75,8 @@ if __name__ == '__main__':
     #--------------------------------------------------------------------------
     # load or create projection directions
     #--------------------------------------------------------------------------
-    if args.dir_file1:
-        dir_file = args.dir_file1
+    if args.dir_file:
+        dir_file = args.dir_file
     else:
         dir_file = setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s2, args.model_folder1)
     #--------------------------------------------------------------------------
