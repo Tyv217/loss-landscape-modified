@@ -133,7 +133,7 @@ def plot_trajectory(proj_file, dir_file, losses, show=False):
     if show:
         plt.show()
 
-def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, losses1, losses2, show=False):
+def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, losses1, losses2, annotate_every_n, show=False):
     """Plot optimization trajectory on the plane spanned by given directions."""
 
     assert exists(proj_file1), "Projection file does not exist."
@@ -151,7 +151,7 @@ def plot_trajectory_compare(proj_file1, proj_file2, dir_file, name1, name2, loss
         if i % 3 == 0:
             plt.annotate(loss, (x_coord1[i], y_coord1[i] + 1))
     for i, loss in enumerate(losses2):
-        if i % 3 == 0:
+        if i % annotate_every_n == 0:
             plt.annotate(loss, (x_coord2[i], y_coord2[i] - 1))
     plt.tick_params("y", labelsize="x-large")
     plt.tick_params("x", labelsize="x-large")
