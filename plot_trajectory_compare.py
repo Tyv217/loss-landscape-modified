@@ -33,6 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('--dir_file', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file1', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file2', default='', help='load the direction file for projection')
+    parser.add_argument('--annotate_every_n', default=3, help='load the direction file for projection')
 
 
     args = parser.parse_args()

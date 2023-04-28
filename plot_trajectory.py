@@ -31,7 +31,6 @@ if __name__ == '__main__':
     parser.add_argument('--save_epoch', default=1, type=int, help='save models every few epochs')
     parser.add_argument('--dir_file', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file', default='', help='load the direction file for projection')
-    parser.add_argument('--annotate_every_n', default=3, help='load the direction file for projection')
 
     args = parser.parse_args()
     with open(args.loss_file, 'r') as f:
@@ -69,4 +68,4 @@ if __name__ == '__main__':
     #--------------------------------------------------------------------------
     proj_file = project_trajectory(dir_file, w, s, args.dataset, args.model,
                                 model_files, args.dir_type, 'cos')
-    plot_2D.plot_trajectory(proj_file, dir_file, losses, annotate_every_n)
+    plot_2D.plot_trajectory(proj_file, dir_file, losses)
