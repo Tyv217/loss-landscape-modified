@@ -330,7 +330,6 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
     # load models and prepare the optimization path matrix
     matrix1 = []
     for model_file in model_files1:
-        print (model_file)
         net2 = model_loader.load(args.dataset, args.model, model_file)
         if args.dir_type == 'weights':
             w = net_plotter.get_weights(net2)
@@ -344,7 +343,6 @@ def setup_PCA_directions_compare(args, model_files1, model_files2, w1, w2, s1, s
         matrix1.append(d.numpy())
     matrix2 = []
     for model_file in model_files2:
-        print (model_file)
         net2 = model_loader.load(args.dataset, args.model, model_file)
         if args.dir_type == 'weights':
             w = net_plotter.get_weights(net2)
