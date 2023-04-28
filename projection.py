@@ -198,7 +198,6 @@ def setup_PCA_directions(args, model_files, w, s):
     # load models and prepare the optimization path matrix
     matrix = []
     for model_file in model_files:
-        print (model_file)
         net2 = model_loader.load(args.dataset, args.model, model_file)
         if args.dir_type == 'weights':
             w2 = net_plotter.get_weights(net2)
