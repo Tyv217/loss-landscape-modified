@@ -160,7 +160,6 @@ def project_trajectory(dir_file, w, s, dataset, model_name, model_files,
         d = tensorlist_to_tensor(d)
 
         x, y = project_2D(d, dx, dy, proj_method)
-        print ("%s  (%.4f, %.4f)" % (model_file, x, y))
 
         xcoord.append(x)
         ycoord.append(y)
