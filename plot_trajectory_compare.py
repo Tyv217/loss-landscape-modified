@@ -33,7 +33,8 @@ if __name__ == '__main__':
     parser.add_argument('--dir_file', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file1', default='', help='load the direction file for projection')
     parser.add_argument('--loss_file2', default='', help='load the direction file for projection')
-    parser.add_argument('--annotate_every_n', default=3, help='load the direction file for projection')
+    parser.add_argument('--annotate_every_n1', default=5, help='load the direction file for projection')
+    parser.add_argument('--annotate_every_n2', default=5, help='load the direction file for projection')
 
 
     args = parser.parse_args()
@@ -87,4 +88,4 @@ if __name__ == '__main__':
                                 model_files1, args.dir_type, 'cos', 1)
     proj_file2 = project_trajectory_compare(dir_file, w2, s2, args.dataset, args.model,
                                 model_files2, args.dir_type, 'cos', 2)
-    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file, args.model_folder1.split("/")[-1], args.model_folder2.split("/")[-1], losses1, losses2, args.annotate_every_n)
+    plot_2D.plot_trajectory_compare(proj_file1, proj_file2, dir_file, args.model_folder1.split("/")[-1], args.model_folder2.split("/")[-1], losses1, losses2, args.annotate_every_n1, args.annotate_every_n2)
